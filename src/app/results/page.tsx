@@ -87,7 +87,7 @@ function LegislatorBlock({ legislator, title, zip }: { legislator: { name: strin
           <div className="text-gray-700">Party: {legislator.party}</div>
         </div>
         <div className="mt-4">
-          <ContactLinks phone={legislator.phone} url={legislator.website} />
+        <ContactLinks phone={legislator.phone ?? ""} url={legislator.website ?? ""} />
         </div>
         <div className="mt-4">
           <ScriptBox
