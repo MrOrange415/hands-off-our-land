@@ -1,39 +1,62 @@
 import { getBaseUrl } from '@/lib/getBaseUrl';
 
-function getCurrentTerm(legislator) {
+// Types for the legislator data
+interface Term {
+  type: 'sen' | 'rep';
+  state: string;
+  district?: number;
+  start: string;
+  end: string;
+  party?: string;
+  url?: string;
+  office?: string;
+  phone?: string;
+  contact_form?: string;
+  [key: string]: unknown;
+}
+
+interface Legislator {
+  id: Record<string, unknown>;
+  name: { first: string; last: string; [key: string]: unknown };
+  bio: Record<string, unknown>;
+  terms: Term[];
+  [key: string]: unknown;
+}
+
+function getCurrentTerm(legislator: Legislator): Term | undefined {
   return Array.isArray(legislator.terms)
-    ? legislator.terms.reduce((latest, term) => {
+    ? legislator.terms.reduce((latest: Term | undefined, term: Term) => {
         return !latest || new Date(term.start) > new Date(latest.start) ? term : latest;
       }, undefined)
     : undefined;
 }
 
-function simplifyRep(rep) {
+function simplifyRep(rep: Legislator) {
   const term = getCurrentTerm(rep);
   return {
     name: `${rep.name.first} ${rep.name.last}`,
-    district: `${term.state}-${term.district}`,
-    party: term.party,
-    phone: term.phone || term.phone,
-    office: term.office,
-    website: term.url,
-    contact_form: term.contact_form || null,
+    district: `${term?.state}-${term?.district}`,
+    party: term?.party,
+    phone: term?.phone || term?.phone,
+    office: term?.office,
+    website: term?.url,
+    contact_form: term?.contact_form || null,
   };
 }
 
-function simplifySen(sen) {
+function simplifySen(sen: Legislator) {
   const term = getCurrentTerm(sen);
   return {
     name: `${sen.name.first} ${sen.name.last}`,
-    party: term.party,
-    phone: term.phone || term.phone,
-    office: term.office,
-    website: term.url,
-    contact_form: term.contact_form || null,
+    party: term?.party,
+    phone: term?.phone || term?.phone,
+    office: term?.office,
+    website: term?.url,
+    contact_form: term?.contact_form || null,
   };
 }
 
-export async function GET(request) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const zip = searchParams.get('zip');
 
