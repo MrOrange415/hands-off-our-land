@@ -1,4 +1,5 @@
 import legislators from '@/data/legislators-current.json';
+import { NextRequest } from 'next/server';
 
 // Types for the legislator data
 interface Legislator {
@@ -18,7 +19,7 @@ interface Term {
   [key: string]: unknown;
 }
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   // console.log(`searchParams ${searchParams}`);
   const stateCode = searchParams.get('stateCode');

@@ -1,4 +1,6 @@
-export async function GET(request: Request) {
+import { NextRequest } from 'next/server';
+
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   // console.log(`searchParams ${searchParams}`);
   const address = searchParams.get('address');

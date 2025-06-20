@@ -35,15 +35,15 @@ function ContactLinks({ phone, url }: { phone: string; url: string }) {
 }
 
 function ScriptBox({ title, lastName, zip, role }: { title: string; lastName: string; zip: string; role: string }) {
-  const script = `Hi, my name is [Your Name], and I&apos;m a constituent from ZIP code ${zip}.
+  const script = `Hi, my name is [Your Name], and I'm a constituent from ZIP code ${zip}.
 
-I&apos;m calling to urge ${role} ${lastName} to oppose the proposed sell-off of our National Parks.
+I'm calling to urge ${role} ${lastName} to oppose the proposed sell-off of our National Parks.
 
 These public lands belong to all of us, and I believe they should be preserved — not handed over to private developers or interests.
 
 Please stand up for our parks and protect them for future generations.
 
-I&apos;ll be closely watching how you vote on this issue, and I&apos;ll remember it in future elections.
+I'll be closely watching how you vote on this issue, and I'll remember it in future elections.
 
 Thank you for your time.`;
 
@@ -123,7 +123,7 @@ export default function ResultsPage() {
         setLoading(false);
       })
       .catch(() => {
-        setError("Couldn&apos;t find district info for this ZIP.");
+        setError("Couldn't find district info for this ZIP.");
         setLoading(false);
       });
   }, [zip]);
@@ -135,7 +135,7 @@ export default function ResultsPage() {
         {loading && <div className="text-lg text-gray-600">Loading...</div>}
         {error && (
           <div className="bg-red-100 text-red-700 rounded-lg p-4 text-center w-full max-w-md">
-            Couldn&apos;t find district info for this ZIP.
+            Couldn't find district info for this ZIP.
           </div>
         )}
         {!loading && !error && data && (
@@ -149,8 +149,8 @@ export default function ResultsPage() {
             <div className="mt-4 w-full max-w-md text-center">
               <div className="text-sm text-gray-400">
                 <span role="img" aria-label="location">📍</span> <span className="font-semibold">Accuracy Note</span><br />
-                This tool uses ZIP code to find your congressional district. This works in over 80% of cases, but because ZIP codes don&apos;t always align perfectly with political boundaries, your result may not be 100% accurate.<br /><br />
-                Even in edge cases, you&apos;ll likely only be off by <span className="font-semibold">one district</span> &mdash; and congressional offices usually forward messages to the correct rep if needed. Your <span className="font-semibold">senators are always correct</span>, since they represent the whole state.<br /><br />
+                This tool uses ZIP code to find your congressional district. This works in over 80% of cases, but because ZIP codes don't always align perfectly with political boundaries, your result may not be 100% accurate.<br /><br />
+                Even in edge cases, you'll likely only be off by <span className="font-semibold">one district</span> &mdash; and congressional offices usually forward messages to the correct rep if needed. Your <span className="font-semibold">senators are always correct</span>, since they represent the whole state.<br /><br />
                 <span role="img" aria-label="tools">🛠️</span> Full address lookup support coming soon for pinpoint accuracy.
               </div>
             </div>

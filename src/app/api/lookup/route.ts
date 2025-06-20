@@ -1,4 +1,6 @@
-export async function GET(request) {
+import { NextRequest } from 'next/server';
+
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const zip = searchParams.get('zip');
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;

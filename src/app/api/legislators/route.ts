@@ -1,4 +1,5 @@
 import { getBaseUrl } from '@/lib/getBaseUrl';
+import { NextRequest } from 'next/server';
 
 // Types for the legislator data
 interface Term {
@@ -56,7 +57,7 @@ function simplifySen(sen: Legislator) {
   };
 }
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const zip = searchParams.get('zip');
 
