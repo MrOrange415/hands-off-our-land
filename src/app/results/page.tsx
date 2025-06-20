@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-function ContactLinks({ phone, url }) {
+function ContactLinks({ phone, url }: { phone: string; url: string }) {
   // Helper to strip trailing slash
-  function getContactUrl(url) {
+  function getContactUrl(url: string) {
     if (!url) return null;
     return url.replace(/\/$/, "") + "/contact";
   }
@@ -34,16 +34,16 @@ function ContactLinks({ phone, url }) {
   );
 }
 
-function ScriptBox({ title, lastName, zip, role }) {
-  const script = `Hi, my name is [Your Name], and I'm a constituent from ZIP code ${zip}.
+function ScriptBox({ title, lastName, zip, role }: { title: string; lastName: string; zip: string; role: string }) {
+  const script = `Hi, my name is [Your Name], and I&apos;m a constituent from ZIP code ${zip}.
 
-I'm calling to urge ${role} ${lastName} to oppose the proposed sell-off of our National Parks.
+I&apos;m calling to urge ${role} ${lastName} to oppose the proposed sell-off of our National Parks.
 
 These public lands belong to all of us, and I believe they should be preserved — not handed over to private developers or interests.
 
 Please stand up for our parks and protect them for future generations.
 
-I'll be closely watching how you vote on this issue, and I'll remember it in future elections.
+I&apos;ll be closely watching how you vote on this issue, and I&apos;ll remember it in future elections.
 
 Thank you for your time.`;
 
@@ -69,9 +69,10 @@ Thank you for your time.`;
   );
 }
 
-function LegislatorBlock({ legislator, title, zip }) {
+function LegislatorBlock({ legislator, title, zip }: { legislator: { name: string; district?: string; party: string; phone?: string; website?: string } | null; title: string; zip: string }) {
   if (!legislator) return null;
-  const lastName = legislator.name.split(' ').slice(-1)[0];
+  const splitName = legislator.name.split(' ');
+  const lastName = splitName[splitName.length-1] || '';
   return (
     <div className="flex flex-col h-full flex-grow min-h-[500px] bg-white shadow-md hover:shadow-lg transition-shadow rounded-xl p-6 w-full max-w-md mx-auto relative justify-between">
       {/* Badge placeholder for future use */}
@@ -104,7 +105,7 @@ function LegislatorBlock({ legislator, title, zip }) {
 export default function ResultsPage() {
   const searchParams = useSearchParams();
   const zip = searchParams.get("zip") || "";
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<{ representative: { name: string; district?: string; party: string; phone?: string; website?: string } | null; senators: { name: string; district?: string; party: string; phone?: string; website?: string }[] } | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -141,14 +142,14 @@ export default function ResultsPage() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full items-start">
               <LegislatorBlock legislator={data.representative} title="Representative" zip={zip} />
-              {data.senators && data.senators.length > 0 && data.senators.map((sen, i) => (
+              {data.senators && data.senators.length > 0 && data.senators.map((sen: { name: string; district?: string; party: string; phone?: string; website?: string }, i: number) => (
                 <LegislatorBlock key={i} legislator={sen} title="Senator" zip={zip} />
               ))}
             </div>
             <div className="mt-4 w-full max-w-md text-center">
               <div className="text-sm text-gray-400">
                 <span role="img" aria-label="location">📍</span> <span className="font-semibold">Accuracy Note</span><br />
-                This tool uses ZIP code to find your congressional district. This works in over 80% of cases, but because ZIP codes don't always align perfectly with political boundaries, your result may not be 100% accurate.<br /><br />
+                This tool uses ZIP code to find your congressional district. This works in over 80% of cases, but because ZIP codes don&apos;t always align perfectly with political boundaries, your result may not be 100% accurate.<br /><br />
                 Even in edge cases, you&apos;ll likely only be off by <span className="font-semibold">one district</span> &mdash; and congressional offices usually forward messages to the correct rep if needed. Your <span className="font-semibold">senators are always correct</span>, since they represent the whole state.<br /><br />
                 <span role="img" aria-label="tools">🛠️</span> Full address lookup support coming soon for pinpoint accuracy.
               </div>

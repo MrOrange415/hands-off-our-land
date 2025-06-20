@@ -1,5 +1,23 @@
 import legislators from '@/data/legislators-current.json';
 
+// Types for the legislator data
+interface Legislator {
+  id: Record<string, unknown>;
+  name: Record<string, unknown>;
+  bio: Record<string, unknown>;
+  terms: Term[];
+  [key: string]: unknown;
+}
+
+interface Term {
+  type: 'sen' | 'rep';
+  state: string;
+  district?: number;
+  start: string;
+  end: string;
+  [key: string]: unknown;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   // console.log(`searchParams ${searchParams}`);
@@ -11,16 +29,16 @@ export async function GET(request: Request) {
   }
 
   // Helper to get the current term
-  function getCurrentTerm(legislator: any) {
+  function getCurrentTerm(legislator: Legislator): Term | undefined {
     return Array.isArray(legislator.terms)
-      ? legislator.terms.reduce((latest: any, term: any) => {
+      ? legislator.terms.reduce((latest: Term | undefined, term: Term) => {
           return !latest || new Date(term.start) > new Date(latest.start) ? term : latest;
         }, undefined)
       : undefined;
   }
 
   // Find representatives
-  const representatives = legislators.filter((legislator) => {
+  const representatives = (legislators as Legislator[]).filter((legislator) => {
     const term = getCurrentTerm(legislator);
     return (
       term &&
@@ -31,7 +49,7 @@ export async function GET(request: Request) {
   });
 
   // Find senators
-  const senators = legislators.filter((legislator) => {
+  const senators = (legislators as Legislator[]).filter((legislator) => {
     const term = getCurrentTerm(legislator);
     return term && term.type === 'sen' && term.state === stateCode;
   });
