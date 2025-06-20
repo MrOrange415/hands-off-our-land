@@ -82,6 +82,7 @@ export async function GET(request: NextRequest) {
   let address;
   try {
     const url = `${baseUrl}/api/reverse-geocode?lat=${encodeURIComponent(coords.lat)}&lng=${encodeURIComponent(coords.lng)}`;
+    console.log(`address url ${url}`)
     const addressRes = await fetch(url);
     if (!addressRes.ok) throw new Error('Failed to get address');
     address = await addressRes.json();
@@ -94,7 +95,7 @@ export async function GET(request: NextRequest) {
   let districtInfo;
   try {
     const url = `${baseUrl}/api/district-info?address=${encodeURIComponent(address.address)}&zip=${encodeURIComponent(zip)}`;
-    console.log(`url ${url}`);
+    console.log(`districtInfo url ${url}`)
     const districtRes = await fetch(url);
     if (!districtRes.ok) throw new Error('Failed to get district info');
     districtInfo = await districtRes.json();
@@ -107,7 +108,9 @@ export async function GET(request: NextRequest) {
   // Step 4: Get legislators from stateCode and districtCode
   let legislators;
   try {
-    const legislatorsRes = await fetch(`${baseUrl}/api/get-legislators?stateCode=${encodeURIComponent(districtInfo.stateCode)}&districtCode=${encodeURIComponent(districtInfo.districtCode)}`);
+    const url = `${baseUrl}/api/get-legislators?stateCode=${encodeURIComponent(districtInfo.stateCode)}&districtCode=${encodeURIComponent(districtInfo.districtCode)}`
+    const legislatorsRes = await fetch(url);
+    console.log(`legislators url ${url}`)
     if (!legislatorsRes.ok) throw new Error('Failed to get legislators');
     legislators = await legislatorsRes.json();
     if (!legislators.representatives || !legislators.senators) throw new Error('Legislators not found');
