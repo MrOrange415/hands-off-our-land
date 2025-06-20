@@ -122,7 +122,7 @@ export default function ResultsPage() {
         setLoading(false);
       })
       .catch(() => {
-        setError("Couldn't find district info for this ZIP.");
+        setError("Couldn&apos;t find district info for this ZIP.");
         setLoading(false);
       });
   }, [zip]);
@@ -134,7 +134,7 @@ export default function ResultsPage() {
         {loading && <div className="text-lg text-gray-600">Loading...</div>}
         {error && (
           <div className="bg-red-100 text-red-700 rounded-lg p-4 text-center w-full max-w-md">
-            Couldn't find district info for this ZIP.
+            Couldn&apos;t find district info for this ZIP.
           </div>
         )}
         {!loading && !error && data && (
@@ -149,7 +149,7 @@ export default function ResultsPage() {
               <div className="text-sm text-gray-400">
                 <span role="img" aria-label="location">📍</span> <span className="font-semibold">Accuracy Note</span><br />
                 This tool uses ZIP code to find your congressional district. This works in over 80% of cases, but because ZIP codes don't always align perfectly with political boundaries, your result may not be 100% accurate.<br /><br />
-                Even in edge cases, you'll likely only be off by <span className="font-semibold">one district</span> — and congressional offices usually forward messages to the correct rep if needed. Your <span className="font-semibold">senators are always correct</span>, since they represent the whole state.<br /><br />
+                Even in edge cases, you&apos;ll likely only be off by <span className="font-semibold">one district</span> &mdash; and congressional offices usually forward messages to the correct rep if needed. Your <span className="font-semibold">senators are always correct</span>, since they represent the whole state.<br /><br />
                 <span role="img" aria-label="tools">🛠️</span> Full address lookup support coming soon for pinpoint accuracy.
               </div>
             </div>

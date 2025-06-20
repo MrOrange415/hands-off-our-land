@@ -2,11 +2,11 @@ import legislatorsRaw from '@/data/legislators-current.json';
 
 // Types for the legislator data
 interface Legislator {
-  id: Record<string, any>;
-  name: Record<string, any>;
-  bio: Record<string, any>;
+  id: Record<string, unknown>;
+  name: Record<string, unknown>;
+  bio: Record<string, unknown>;
   terms: Term[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface Term {
@@ -15,13 +15,13 @@ interface Term {
   district?: number;
   start: string;
   end: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
-const legislators: any[] = legislatorsRaw as any[];
+const legislators = legislatorsRaw as unknown[];
 
-function isLegislator(obj: any): obj is Legislator {
-  return Array.isArray(obj.terms);
+function isLegislator(obj: unknown): obj is Legislator {
+  return typeof obj === 'object' && obj !== null && Array.isArray((obj as Legislator).terms);
 }
 
 // Helper to get the current term (the one with the latest start date)

@@ -50,8 +50,8 @@ export async function GET(request) {
     if (!lookupRes.ok) throw new Error('Failed to lookup coordinates');
     coords = await lookupRes.json();
     if (!coords.lat || !coords.lng) throw new Error('Coordinates not found');
-  } catch (e) {
-    return new Response(JSON.stringify({ error: 'Failed to get coordinates from zip', details: e.message }), { status: 500 });
+  } catch {
+    return new Response(JSON.stringify({ error: 'Failed to get coordinates from zip' }), { status: 500 });
   }
 
   // Step 2: Get address from coordinates
@@ -62,8 +62,8 @@ export async function GET(request) {
     if (!addressRes.ok) throw new Error('Failed to get address');
     address = await addressRes.json();
     if (!address.address) throw new Error('Address not found');
-  } catch (e) {
-    return new Response(JSON.stringify({ error: 'Failed to get address from coordinates', details: e.message }), { status: 500 });
+  } catch {
+    return new Response(JSON.stringify({ error: 'Failed to get address from coordinates' }), { status: 500 });
   }
 
   // Step 3: Get district info from address and zip
@@ -76,8 +76,8 @@ export async function GET(request) {
     districtInfo = await districtRes.json();
     console.log(`districtInfo ${districtInfo}`);
     if (!districtInfo.stateCode || !districtInfo.districtCode) throw new Error('District info not found');
-  } catch (e) {
-    return new Response(JSON.stringify({ error: 'Failed to get district info from address', details: e.message }), { status: 500 });
+  } catch {
+    return new Response(JSON.stringify({ error: 'Failed to get district info from address' }), { status: 500 });
   }
 
   // Step 4: Get legislators from stateCode and districtCode
@@ -87,8 +87,8 @@ export async function GET(request) {
     if (!legislatorsRes.ok) throw new Error('Failed to get legislators');
     legislators = await legislatorsRes.json();
     if (!legislators.representatives || !legislators.senators) throw new Error('Legislators not found');
-  } catch (e) {
-    return new Response(JSON.stringify({ error: 'Failed to get legislators from district info', details: e.message }), { status: 500 });
+  } catch {
+    return new Response(JSON.stringify({ error: 'Failed to get legislators from district info' }), { status: 500 });
   }
 
   const representatives = legislators.representatives || [];
