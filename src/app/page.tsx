@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-white">
       <div className="w-full max-w-md bg-white/90 rounded-xl shadow-lg p-10 flex flex-col items-center">
-        <h1 className="text-3xl font-semibold mb-4 text-center text-gray-800">Civic Engagement App</h1>
+        <h1 className="text-3xl font-semibold mb-4 text-center text-gray-800">HANDS OFF OUR LAND</h1>
         <p className="text-lg text-gray-600 mb-8 text-center">
           Enter your ZIP code to get the contact info for your representatives and take action.
         </p>
