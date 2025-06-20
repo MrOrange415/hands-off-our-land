@@ -1,3 +1,5 @@
 export function getBaseUrl() {
-  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-} 
+  if (typeof window !== 'undefined') return ''; // use relative paths in browser
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // Vercel runtime
+  return 'http://localhost:3000'; // local fallback
+}
