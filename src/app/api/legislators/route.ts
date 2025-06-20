@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
     if (!lookupRes.ok) throw new Error('Failed to lookup coordinates');
     coords = await lookupRes.json();
     if (!coords.lat || !coords.lng) throw new Error('Coordinates not found');
-  } catch {
+  } catch (e: unknown) {
     return new Response(JSON.stringify({ error: 'Failed to get coordinates from zip' }), { status: 500 });
   }
 
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
     if (!addressRes.ok) throw new Error('Failed to get address');
     address = await addressRes.json();
     if (!address.address) throw new Error('Address not found');
-  } catch {
+  } catch (e: unknown) {
     return new Response(JSON.stringify({ error: 'Failed to get address from coordinates' }), { status: 500 });
   }
 
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
     districtInfo = await districtRes.json();
     console.log(`districtInfo ${districtInfo}`);
     if (!districtInfo.stateCode || !districtInfo.districtCode) throw new Error('District info not found');
-  } catch {
+  } catch (e: unknown) {
     return new Response(JSON.stringify({ error: 'Failed to get district info from address' }), { status: 500 });
   }
 
@@ -111,7 +111,7 @@ export async function GET(request: NextRequest) {
     if (!legislatorsRes.ok) throw new Error('Failed to get legislators');
     legislators = await legislatorsRes.json();
     if (!legislators.representatives || !legislators.senators) throw new Error('Legislators not found');
-  } catch {
+  } catch (e: unknown) {
     return new Response(JSON.stringify({ error: 'Failed to get legislators from district info' }), { status: 500 });
   }
 

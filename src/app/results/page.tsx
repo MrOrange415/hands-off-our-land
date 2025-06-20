@@ -122,7 +122,7 @@ export default function ResultsPage() {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((e: unknown) => {
         setError("Couldn't find district info for this ZIP.");
         setLoading(false);
       });

@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     return new Response(JSON.stringify({ lat: location.lat, lng: location.lng }), {
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch {
+  } catch (e: unknown) {
     return new Response(JSON.stringify({ error: 'Failed to fetch coordinates' }), { status: 500 });
   }
 } 

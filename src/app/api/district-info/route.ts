@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
     return new Response(JSON.stringify(output), {
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch {
+  } catch (e: unknown) {
     return new Response(JSON.stringify({ error: 'Failed to fetch district info' }), { status: 500 });
   }
 } 
