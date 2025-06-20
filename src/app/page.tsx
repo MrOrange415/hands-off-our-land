@@ -6,7 +6,7 @@ export default function Home() {
   const [zip, setZip] = useState("");
   const router = useRouter();
 
-  function handleSubmit(e) {
+  function handleSubmit(e: unknown) {
     e.preventDefault();
     if (zip.trim().length === 5 && /^\d{5}$/.test(zip)) {
       router.push(`/results?zip=${zip}`);
