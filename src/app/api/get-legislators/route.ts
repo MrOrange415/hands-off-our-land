@@ -1,8 +1,8 @@
 import legislators from '@/data/legislators-current.json';
 
-export async function GET(request) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  console.log(`searchParams ${searchParams}`);
+  // console.log(`searchParams ${searchParams}`);
   const stateCode = searchParams.get('stateCode');
   const districtCode = searchParams.get('districtCode');
 
@@ -11,9 +11,9 @@ export async function GET(request) {
   }
 
   // Helper to get the current term
-  function getCurrentTerm(legislator) {
+  function getCurrentTerm(legislator: any) {
     return Array.isArray(legislator.terms)
-      ? legislator.terms.reduce((latest, term) => {
+      ? legislator.terms.reduce((latest: any, term: any) => {
           return !latest || new Date(term.start) > new Date(latest.start) ? term : latest;
         }, undefined)
       : undefined;

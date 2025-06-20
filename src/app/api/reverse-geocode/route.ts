@@ -1,4 +1,4 @@
-export async function GET(request) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const lat = searchParams.get('lat');
   const lng = searchParams.get('lng');
@@ -17,8 +17,8 @@ export async function GET(request) {
     if (!Array.isArray(results) || results.length === 0) {
       return new Response(JSON.stringify({ error: 'No address found' }), { status: 500 });
     }
-    // console.log(`results ${JSON.stringify(results, null, 2)}`)
-    // console.log(`results[0].formatted_address ${JSON.stringify(results[0].formatted_address)}`)
+    //   // console.log(`results ${JSON.stringify(results, null, 2)}`)
+    //   // console.log(`results[0].formatted_address ${JSON.stringify(results[0].formatted_address)}`)
     const formatted_address = results[0].formatted_address;
     return new Response(JSON.stringify({ address: formatted_address }), {
       headers: { 'Content-Type': 'application/json' },
