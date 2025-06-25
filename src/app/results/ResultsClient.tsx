@@ -2,6 +2,12 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
+declare global {
+  interface Window {
+    plausible?: (event: string, options?: Record<string, any>) => void;
+  }
+}
+
 function ContactLinks({ phone, url }: { phone: string; url: string }) {
   function getContactUrl(url: string) {
     if (!url) return null;
@@ -11,10 +17,28 @@ function ContactLinks({ phone, url }: { phone: string; url: string }) {
   return (
     <div className="flex flex-col sm:flex-row gap-3 mt-2">
       {phone && (
-        <a href={`tel:${phone}`} className="text-blue-600 underline hover:text-blue-800 font-medium">Call</a>
+        <a
+          href={`tel:${phone}`}
+          onClick={() =>
+            typeof window !== 'undefined' && window.plausible?.("Call Representative")
+          }
+          className="text-blue-600 underline hover:text-blue-800 font-medium"
+        >
+          Call
+        </a>
       )}
       {contactUrl && (
-        <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800 font-medium">Email</a>
+        <a
+          href={contactUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() =>
+            typeof window !== 'undefined' && window.plausible?.("Email Representative")
+          }
+          className="text-blue-600 underline hover:text-blue-800 font-medium"
+        >
+          Email
+        </a>
       )}
     </div>
   );
@@ -25,6 +49,9 @@ function ScriptBox({ title, lastName, zip, role }: { title: string; lastName: st
 \nI'm calling to urge ${role} ${lastName} to oppose the proposed sell-off of our National Parks.\n\nThese public lands belong to all of us, and I believe they should be preserved — not handed over to private developers or interests.\n\nPlease stand up for our parks and protect them for future generations.\n\nI'll be closely watching how you vote on this issue, and I'll remember it in future elections.\n\nThank you for your time.`;
   function handleCopy() {
     navigator.clipboard.writeText(script);
+    if (typeof window !== 'undefined' && (window as any).plausible) {
+      (window as any).plausible("Copy Script");
+    }
   }
   return (
     <div className="w-full max-w-md mt-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm p-4">
