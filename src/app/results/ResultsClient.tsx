@@ -46,7 +46,7 @@ function ContactLinks({ phone, url }: { phone: string; url: string }) {
 
 function ScriptBox({ title, lastName, zip, role }: { title: string; lastName: string; zip: string; role: string }) {
   const script = `Hi, my name is [Your Name], and I'm a constituent from ZIP code ${zip}.
-\nI'm calling to urge ${role} ${lastName} to oppose the proposed sell-off of our National Parks.\n\nThese public lands belong to all of us, and I believe they should be preserved — not handed over to private developers or interests.\n\nPlease stand up for our parks and protect them for future generations.\n\nI'll be closely watching how you vote on this issue, and I'll remember it in future elections.\n\nThank you for your time.`;
+\nI'm calling to urge ${role} ${lastName} to oppose the proposed sell-off of our National Parks.\n\nThese public lands belong to all of us, and I believe they should be preserved — not handed over to private developers or interests.\n\nPlease stand up for our parks and protect them for future generations.\n\nThis issue is very important to the [YOUR STATE] people and I trust you will make the right decision.\n\nThank you for your time.`;
   function handleCopy() {
     navigator.clipboard.writeText(script);
     if (typeof window !== 'undefined' && (window as any).plausible) {
