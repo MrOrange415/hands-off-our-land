@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const res = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${encodeURIComponent(lat)},${encodeURIComponent(lng)}&key=${apiKey}`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${encodeURIComponent(lat)},${encodeURIComponent(lng)}&result_type=street_address|route&location_type=ROOFTOP|RANGE_INTERPOLATED&&key=${apiKey}`
     );
     const data = await res.json();
     const results = data.results;
